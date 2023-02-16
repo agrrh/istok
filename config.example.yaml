@@ -1,0 +1,73 @@
+---
+
+title: Istok
+
+greeting:
+  enabled: true
+
+  name: User
+
+  options:
+    daytime: true
+    date: true
+    time: true
+
+# TODO: Add themes
+style:
+  items:
+    - name: one-dark
+      background: '#21252b'
+      primary: '#abb2bf'
+      accent: '#585f6c'
+    - name: concourse
+      background: '#262626'
+      primary: '#e2dfdc'
+      accent: '#6d6c6b'
+
+groups:
+  enabled: true
+
+  # Groups may be predefined to set options manually
+  items:
+    - name: general
+      title: General
+      options:
+        sort: true
+
+static:
+  enabled: true
+
+  options:
+    descr: true
+    url: true
+    icon: true
+
+  # TODO: Add color field to let user colorize icons
+  items:
+    - name: foo
+      group: general
+      title: Foo
+      descr: My Foo service
+      url: http://example.org
+      icon: mdi:test-tube
+
+    - name: bar
+      group: general
+      title: Bar
+      descr: My Bar service
+      url: http://example.org
+      icon: mdi:account
+
+    - name: baz
+      group: monitoring
+      title: Baz
+      descr: Baz Monitoring
+      url: http://example.org
+      icon: mdi:display
+
+kubernetes:
+  enabled: true
+
+  options:
+    # Only annotated namespaces
+    filter_namespaces: true
