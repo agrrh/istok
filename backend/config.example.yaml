@@ -31,8 +31,12 @@ groups:
   items:
     - name: general
       title: General
-      options:
-        sort: true
+
+    - name: foo
+      title: Foo, second
+
+    - name: bar
+      title: Bar, third
 
 static:
   enabled: true

@@ -1,30 +1,33 @@
 <script>
-	export let name;
+	import { onMount } from "svelte";
+
+	import Greeting from './components/Greeting.svelte';
+	import GroupsList from './components/GroupsList.svelte';
+
+	const endpoint = "http://127.0.0.1:8081/";
+
+	export let config = {};
+	export let greeting = {};
+	export let groups = [];
+
+	onMount(async function () {
+		var response;
+		var data;
+
+		// Config
+		response = await fetch(endpoint + "config/");
+		data = await response.json();
+		config = data;
+		greeting = config.greeting;
+
+		// Groups
+		response = await fetch(endpoint + "groups/");
+		data = await response.json();
+		groups = data;
+	});
 </script>
 
 <main>
-	<h1>Hello {name}!</h1>
-	<p>Visit the <a href="https://svelte.dev/tutorial">Svelte tutorial</a> to learn how to build Svelte apps.</p>
+	<Greeting data={greeting}/>
+	<GroupsList data={groups}/>
 </main>
-
-<style>
-	main {
-		text-align: center;
-		padding: 1em;
-		max-width: 240px;
-		margin: 0 auto;
-	}
-
-	h1 {
-		color: #ff3e00;
-		text-transform: uppercase;
-		font-size: 4em;
-		font-weight: 100;
-	}
-
-	@media (min-width: 640px) {
-		main {
-			max-width: none;
-		}
-	}
-</style>

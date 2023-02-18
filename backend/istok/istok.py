@@ -31,7 +31,13 @@ class Istok:
         static_groups_list = [i.get("group") for i in self.config.static.get("items")]
         kube_groups_list = []
 
-        return list(set(direct_groups_list + static_groups_list + kube_groups_list))
+        result_list = []
+
+        result_list += direct_groups_list
+        result_list += set(static_groups_list).difference(result_list)
+        result_list += set(kube_groups_list).difference(result_list)
+
+        return result_list
 
     def items_by_group(self, group: str) -> list:
         items_static_list = [i for i in self.config.static.get("items") if i.get("group") == group]
