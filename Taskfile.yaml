@@ -1,0 +1,79 @@
+---
+
+version: '3'
+
+tasks:
+  build:
+    deps:
+      - build:backend
+      # - build:frontend
+
+  build:backend:
+    cmds:
+      - >
+        cd backend \
+          && docker build . -t local/istok:backend-dev
+
+  build:frontend:
+    cmds:
+      - >
+        cd frontend \
+          && docker build . -t local/istok:frontend-dev
+
+  stop:docker:
+    deps:
+      - stop:docker:backend
+      - stop:docker:frontend
+
+  stop:docker:backend:
+    cmds:
+      - docker rm -f istok-backend || true
+
+  stop:docker:frontend:
+    cmds:
+      - docker rm -f istok-frontend || true
+
+  run:local:
+    deps:
+      - run:local:backend
+      - run:local:frontend
+
+  run:local:backend:
+    env:
+      APP_CONFIG_PATH: config.example.yaml
+    cmds:
+      - >
+        cd backend \
+          && python main.py
+
+  run:local:frontend:
+    cmds:
+      - >
+        cd frontend \
+          && npm run dev
+
+  run:docker:
+    deps:
+      - run:docker:backend
+      - run:docker:frontend
+
+  run:docker:backend:
+    deps:
+      - stop:backend
+      - build:backend
+    cmds:
+      - >-
+        docker run -d --name istok-backend \
+          -e APP_CONFIG_PATH=config.example.yaml \
+          -p 8081:3000 \
+          local/istok:backend-dev
+
+  run:docker:frontend:
+    deps:
+      - stop:frontend
+      - build:frontend
+    cmds:
+      - >-
+        docker run -d --name istok-frontend \
+          -p 8080:80 \
+          local/istok:frontend-dev
