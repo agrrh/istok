@@ -29,12 +29,10 @@
   }
 </script>
 
-<div class="hello">
-
-{#if daytime}
-  Good {getDayTime()}, {name}!
-{:else}
-  Hello, {name}!
-{/if}
-
+<div class="hello pb-4 font-sans font-bold text-6xl">
+  {#if daytime}
+    Good {getDayTime()}, {name}!
+  {:else}
+    Hello, {name}!
+  {/if}
 </div>

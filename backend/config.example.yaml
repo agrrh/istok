@@ -8,9 +8,9 @@ greeting:
   name: User
 
   options:
-    daytime: true
+    weekday: true
     date: true
-    time: true
+    clock: true
 
 # TODO: Add themes
 style:

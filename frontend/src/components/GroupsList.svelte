@@ -1,9 +1,11 @@
 <script>
-  import Group from './Group.svelte';
+  import Group from './groups/Group.svelte';
 
-  export let data = [];
+  export let groups = [];
 </script>
 
-{#each data as group}
+<div class="groups grid grid-cols-3">
+{#each groups as group}
   <Group name={group}/>
 {/each}
+</div>

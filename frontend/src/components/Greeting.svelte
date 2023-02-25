@@ -1,24 +1,13 @@
 <script>
-	export let data;
+	export let greeting;
 
-  import Hello from './Hello.svelte';
-  import Clock from './Clock.svelte';
-
-  // Sample data:
-    // greeting:
-    //   enabled: true
-    //
-    //   name: User
-    //
-    //   options:
-    //     daytime: true
-    //     date: true
-    //     time: true
+	import Hello from './greeting/Hello.svelte';
+	import Clock from './greeting/Clock.svelte';
 </script>
 
-<div class="greeting">
-{#if data.enabled}
-  <Hello name={data.name} daytime={data.options.daytime}/>
-  <Clock date={data.options.date} time={data.options.time}/>
+<div class="greeting pb-8 mt-16">
+{#if greeting.enabled}
+	<Hello name={greeting.name} daytime={greeting.options.daytime}/>
+	<Clock weekday={greeting.options.weekday} date={greeting.options.date} clock={greeting.options.clock}/>
 {/if}
 </div>
