@@ -32,6 +32,7 @@
 						my-6 mr-8 py-2 pr-4
 						rounded-md
 						hover:bg-slate-600 hover:no-underline visited:text-slate-400
+						place-items-center
 					"
 				>
 					<div class="col-span-1 text-4xl capitalize">

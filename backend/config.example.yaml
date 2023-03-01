@@ -64,10 +64,8 @@ static:
 
     - name: baz
       group: monitoring
-      title: Baz
       descr: Baz Monitoring
       url: http://example.org
-      icon: mdi:display
 
 kubernetes:
   enabled: true

@@ -5,6 +5,9 @@ import yaml
 
 from box import Box
 
+from istok.models.groups import BaseGroupsList, DirectGroupsList, StaticGroupsList
+from istok.models.items import BaseItemsList
+
 
 class Istok:
     def __init__(self, path: str = "./config.yaml") -> None:
@@ -27,20 +30,22 @@ class Istok:
 
     @property
     def groups(self) -> list:
-        direct_groups_list = [g.get("name") for g in self.config.groups.get("items")]
-        static_groups_list = [i.get("group") for i in self.config.static.get("items")]
-        kube_groups_list = []
+        direct_groups_list = DirectGroupsList.load_from_dict(self.config.groups)
+        static_groups_list = StaticGroupsList.load_from_dict(self.config.static)
+        kube_groups = {"items": []}
+        kube_groups_list = BaseGroupsList.load_from_dict(kube_groups)
 
         result_list = []
 
-        result_list += direct_groups_list
-        result_list += set(static_groups_list).difference(result_list)
-        result_list += set(kube_groups_list).difference(result_list)
+        result_list += direct_groups_list.to_names_list()
+        result_list += set(static_groups_list.to_names_list()).difference(result_list)
+        result_list += set(kube_groups_list.to_names_list()).difference(result_list)
 
         return result_list
 
     def items_by_group(self, group: str) -> list:
-        items_static_list = [i for i in self.config.static.get("items") if i.get("group") == group]
+        items_static_list = BaseItemsList.load_from_dict(self.config.static)
+
         items_kube_list = []
 
-        return list(items_static_list + items_kube_list)
+        return list(items_static_list.filter_group(group).items + items_kube_list)
